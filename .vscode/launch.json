@@ -1,0 +1,51 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Attach to Running Node.js Process",
+            "type": "node",
+            "request": "attach",
+            "port": 9229,
+            "restart": true, // Auto-restart if the process stops
+            "timeout": 10000, // Wait for 10 seconds to attach
+            "skipFiles": [
+                "<node_internals>/**"
+            ]
+        },
+        {
+            "name": "Launch Current File",
+            "type": "node",
+            "request": "launch",
+            "program": "${file}", // Runs the currently open file
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "console": "integratedTerminal" // Use VS Code terminal for logs
+        },
+        {
+            "name": "Launch Server (Main App)",
+            "type": "node",
+            "request": "launch",
+            "program": "${workspaceFolder}/server.js", // Change this if your entry file is different
+            "outFiles": ["${workspaceFolder}/**/*.js"], // Include all JS files for debugging
+            "restart": true, // Restart if the process crashes
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Launch with Nodemon",
+            "type": "node",
+            "request": "launch",
+            "runtimeExecutable": "nodemon", // Use nodemon for hot-reloading
+            "program": "${workspaceFolder}/server.js",
+            "restart": true,
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen"
+        }
+    ]
+}
