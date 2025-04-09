@@ -94,8 +94,12 @@ const userLogin = async function (req, res) {
         if (!isMatch) {
             return res.status(401).json({ message: "Invalid email or password" });
         }
+        let role = userInfo.role;
+        if (!role) {
+            return res.status(401).json({ message: "Role not found" });
+        }
 
-        const token = jwt.sign({ email }, process.env.JWT_SECRET, { expiresIn: '15m' });
+        const token = jwt.sign({ email, role }, process.env.JWT_SECRET, { expiresIn: '15m' });
 
         // Return token as part of a JSON object
         return res.status(200).json({ message: "User logged in successfully", token });
