@@ -24,7 +24,21 @@ const authenticateToken = async (req, res, next) => {
     }
 };
 
+// Corrected authorizeRoles function
+const authorizeRoles = (roles) => {
+    console.log('AuthorizeRoles Middleware:', roles); // Debugging
+    return (req, res, next) => {
+        console.log('Request User:', req.user); // Debugging
+        if (!req.user || !req.user.role || !roles.includes(req.user.role)) {
+            return res.status(403).json({ message: 'Forbidden: You do not have the required role.' });
+        }
+        next();
+    };
+};
+
+
 
 module.exports = {
-    authenticateToken
+    authenticateToken,
+    authorizeRoles
 }

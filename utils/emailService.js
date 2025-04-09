@@ -1,11 +1,13 @@
 const nodemailer = require('nodemailer');
 
-exports.sendVerificationEmail = async (email, token) => {
-  const transporter = nodemailer.createTransport({
-    service: 'Gmail',
-    auth: { user: process.env.EMAIL_USER, pass: process.env.EMAIL_PASS },
-  });
 
+const transporter = nodemailer.createTransport({
+  service: 'Gmail',
+  auth: { user: process.env.EMAIL_USER, pass: process.env.EMAIL_PASS },
+});
+
+exports.sendVerificationEmail = async (email, token) => {
+  
   const mailOptions = {
     from: process.env.EMAIL_USER,
     to: email,
@@ -19,6 +21,23 @@ exports.sendVerificationEmail = async (email, token) => {
   } catch(err) {
     console.log(err);
   }
-
-  
 };
+
+exports.sendEventRegistrationEmail = async (email, eventName) => {
+
+  const mailOptions = {
+    from: process.env.EMAIL_USER,
+    to: email,
+    subject: `Registered for event: ${eventName}.`,
+    text: `You have successfully registered for the event: ${eventName}.`,
+  };
+
+  try {
+    const res = await transporter.sendMail(mailOptions);
+    console.log(res)
+  } catch(err) {
+    console.log(err);
+  }
+
+
+}
